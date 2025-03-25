@@ -54,7 +54,7 @@ describe('TicketService', () => {
     const showtimeMock = { id: 1, maxSeats: 50 };
     const dto: CreateTicketDto = {
       showtimeId: 1,
-      seat: 10,
+      seatNumber: 10,
       userId: '84438967-f68f-4fa0-b620-0f08217e76af',
     };
 
@@ -62,14 +62,14 @@ describe('TicketService', () => {
     ticketRepo.count.mockResolvedValue(10);
     ticketRepo.findOne.mockResolvedValue(null);
     ticketRepo.create.mockReturnValue({
-      seat: dto.seat,
+        seatNumber: dto.seatNumber,
       userId: dto.userId,
       showtime: showtimeMock,
     } as Ticket);
 
     ticketRepo.save.mockResolvedValue({
       id: 'mock-booking-id',
-      seat: dto.seat,
+      seatNumber: dto.seatNumber,
       userId: dto.userId,
       showtime: showtimeMock,
     } as Ticket);
@@ -84,7 +84,7 @@ describe('TicketService', () => {
     await expect(
       service.create({
         showtimeId: 1,
-        seat: 10,
+        seatNumber: 10,
         userId: '84438967-f68f-4fa0-b620-0f08217e76af',
       }),
     ).rejects.toThrow(NotFoundException);
@@ -98,7 +98,7 @@ describe('TicketService', () => {
     await expect(
       service.create({
         showtimeId: 1,
-        seat: 10,
+        seatNumber: 10,
         userId: '84438967-f68f-4fa0-b620-0f08217e76af',
       }),
     ).rejects.toThrow(BadRequestException);
@@ -112,7 +112,7 @@ describe('TicketService', () => {
     await expect(
       service.create({
         showtimeId: 1,
-        seat: 51,
+        seatNumber: 51,
         userId: '84438967-f68f-4fa0-b620-0f08217e76af',
       }),
     ).rejects.toThrow(BadRequestException);
