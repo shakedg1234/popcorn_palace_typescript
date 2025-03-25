@@ -1,16 +1,16 @@
 # 🎬 Popcorn Palace – Backend Instructions
 
-Welcome to the Popcorn Palace Backend Project!
+Welcome to the Popcorn Palace Backend Project!<br>
 
-This document explains how to install, run, build, and test the project locally.
+This document explains how to install, run, build, and test the project locally.<br>
 
 ---
 
-## 🛠️ Prerequisites
+## 🛠️ Prerequisites</br>
 
-- Node.js (version 18+ recommended)
-- npm (comes with Node.js)
-- Docker (for running the PostgreSQL database)
+- Node.js (version 18+ recommended)<br>
+- npm (comes with Node.js)<br>
+- Docker (for running the PostgreSQL database)</br>
 
 ---
 
@@ -19,95 +19,84 @@ This document explains how to install, run, build, and test the project locally.
 ### 1. Clone the Repository
 
 
-git clone <your-repo-url>
-cd popcorn_palace_typescript
-2. Install Dependencies
-bash
-Copy
-Edit
-npm install
-🐘 Database Setup (PostgreSQL)
-The project uses PostgreSQL, and you can run it locally using Docker Compose.
+-git clone https://github.com/shakedg1234/popcorn_palace_typescript.git<br>
 
-Run PostgreSQL with Docker:
-bash
-Copy
-Edit
-docker-compose up -d
-The database will run on port 5432 with the following credentials:
+###2. Install Dependencies<br>
 
-User: popcorn-palace
+npm install<br>
+🐘 Database Setup (PostgreSQL)<br>
+The project uses PostgreSQL, and you can run it locally using Docker Compose.<br>
 
-Password: popcorn-palace
+Run PostgreSQL with Docker:<br>
+-docker-compose up -d<br>
 
-Database name: popcorn-palace
+The database will run on port 5432 with the following credentials:<br>
 
-The connection is already configured in app.module.ts using TypeOrmModule.forRoot(...).
+User: popcorn-palace<br>
 
-🏗️ Build the Project
-bash
-Copy
-Edit
-npm run build
-🧪 Run Tests
-Unit Tests:
-bash
-Copy
-Edit
-npm run test
-End-to-End (E2E) Tests:
-bash
-Copy
-Edit
-npm run test:e2e
-Make sure the database is running before running E2E tests.
+Password: popcorn-palace<br>
 
-📬 API Endpoints
-The API exposes the following endpoints:
+Database name: popcorn-palace<br>
 
-Movies:
+The connection is already configured in app.module.ts using TypeOrmModule.forRoot(...).<br>
 
-GET /movies – Get all movies
+###🏗️ Build the Project<br>
 
-POST /movies – Add a new movie
+npm run build<br>
+<br>
+🧪 Run Tests<br>
+Unit Tests:<br>
+-npm run test<br>
+End-to-End (E2E) Tests:<br>
+-npm run test:e2e<br>
+Make sure the database is running before running E2E tests.<br>
 
-POST /movies/update/:title – Update a movie by title
+📬 API Endpoints<br>
+The API exposes the following endpoints:<br>
 
-DELETE /movies/:title – Delete a movie by title
+Movies:<br>
 
-Showtimes:
+GET /movies/all – Get all movies<br>
 
-GET /showtimes – Get all showtimes
+POST /movies – Add a new movie<br>
 
-POST /showtimes – Add a showtime
+POST /movies/update/:title – Update a movie by title<br>
 
-POST /showtimes/update/:id – Update a showtime
+DELETE /movies/:title – Delete a movie by title<br>
 
-DELETE /showtimes/:id – Delete a showtime
+Showtimes:<br>
 
-Tickets (Bookings):
+GET /showtimes – Get all showtimes<br>
 
-POST /bookings – Book a single ticket
+POST /showtimes – Add a showtime<br>
 
-POST /bookings/multiple – Book multiple tickets
+POST /showtimes/update/:id – Update a showtime<br>
 
-GET /tickets/:id – Get ticket info
+DELETE /showtimes/:id – Delete a showtime<br>
 
-PUT /tickets/:id – Update ticket seat
+Tickets (Bookings):<br>
 
-DELETE /tickets/:id – Cancel a booking
+POST /bookings – Book a single ticket<br>
 
-All endpoints use JSON format.
+POST /bookings/multiple – Book multiple tickets<br>
 
-✅ Notes
-Validation and error handling are implemented using class-validator.
+GET /tickets/:id – Get ticket info<br>
 
-The system ensures:
+PUT /tickets/:id – Update ticket seat<br>
 
-No overlapping showtimes in the same theater
+DELETE /tickets/:id – Cancel a booking<br>
 
-No double-booking of seats
+All endpoints use JSON format.<br>
 
-A limit of 50 seats per showtime (default)
+✅ Notes<br>
+Validation and error handling are implemented using class-validator.<br>
 
-Proper error messages and HTTP status codes are returned on failure.
+The system ensures:<br>
+
+No overlapping showtimes in the same theater<br>
+
+No double-booking of seats<br>
+
+A limit of 50 seats per showtime (default)<br>
+
+Proper error messages and HTTP status codes are returned on failure.<br>
