@@ -15,32 +15,32 @@ describe('TicketService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-        providers: [
-          TicketService,
-          {
-            provide: getRepositoryToken(Ticket),
-            useValue: {
-              create: jest.fn(),
-              save: jest.fn(),
-              findOne: jest.fn(),
-              count: jest.fn(),
-            },
+      providers: [
+        TicketService,
+        {
+          provide: getRepositoryToken(Ticket),
+          useValue: {
+            create: jest.fn(),
+            save: jest.fn(),
+            findOne: jest.fn(),
+            count: jest.fn(),
           },
-          {
-            provide: getRepositoryToken(Showtime),
-            useValue: {
-              findOne: jest.fn(),
-            },
+        },
+        {
+          provide: getRepositoryToken(Showtime),
+          useValue: {
+            findOne: jest.fn(),
           },
-          {
-            provide: getRepositoryToken(Movie),
-            useValue: {
-              findOne: jest.fn(),
-            },
+        },
+        {
+          provide: getRepositoryToken(Movie),
+          useValue: {
+            findOne: jest.fn(),
           },
-        ],
-      }).compile();
-      
+        },
+      ],
+    }).compile();
+
     service = module.get<TicketService>(TicketService);
     ticketRepo = module.get(getRepositoryToken(Ticket));
     showtimeRepo = module.get(getRepositoryToken(Showtime));
@@ -52,44 +52,55 @@ describe('TicketService', () => {
 
   it('should book a ticket if seat is available and under max seats', async () => {
     const showtimeMock = { id: 1, maxSeats: 50 };
-    const dto = { showtimeId: 1, seat: 10 };
+    const dto: CreateTicketDto = {
+      showtimeId: 1,
+      seat: 10,
+      userId: '84438967-f68f-4fa0-b620-0f08217e76af',
+    };
 
     showtimeRepo.findOne.mockResolvedValue(showtimeMock as Showtime);
     ticketRepo.count.mockResolvedValue(10);
     ticketRepo.findOne.mockResolvedValue(null);
     ticketRepo.create.mockReturnValue({
-        seat: dto.seat,
-        showtime: showtimeMock, 
-      } as Ticket);
-      
-      ticketRepo.save.mockResolvedValue({
-        id: 1,
-        seat: dto.seat,
-        showtime: showtimeMock,
-      } as Ticket);
-      
+      seat: dto.seat,
+      userId: dto.userId,
+      showtime: showtimeMock,
+    } as Ticket);
+
+    ticketRepo.save.mockResolvedValue({
+      id: 'mock-booking-id',
+      seat: dto.seat,
+      userId: dto.userId,
+      showtime: showtimeMock,
+    } as Ticket);
 
     const result = await service.create(dto);
-    expect(result).toEqual({
-        id: 1,
-        seat: 10,
-        showtime: { id: 1, maxSeats: 50 },
-      });
+    expect(result).toEqual({ bookingId: 'mock-booking-id' });
     expect(ticketRepo.save).toHaveBeenCalled();
   });
 
   it('should throw if showtime is not found', async () => {
     showtimeRepo.findOne.mockResolvedValue(null);
-    await expect(service.create({ showtimeId: 1, seat: 10 })).rejects.toThrow(NotFoundException);
+    await expect(
+      service.create({
+        showtimeId: 1,
+        seat: 10,
+        userId: '84438967-f68f-4fa0-b620-0f08217e76af',
+      }),
+    ).rejects.toThrow(NotFoundException);
   });
 
   it('should throw if seat already booked', async () => {
     showtimeRepo.findOne.mockResolvedValue({ id: 1, maxSeats: 50 } as Showtime);
     ticketRepo.count.mockResolvedValue(10);
-    ticketRepo.findOne.mockResolvedValue({ id: 99 } as Ticket);
+    ticketRepo.findOne.mockResolvedValue({ id: 'existing-ticket-id' } as Ticket);
 
     await expect(
-      service.create({ showtimeId: 1, seat: 10 }),
+      service.create({
+        showtimeId: 1,
+        seat: 10,
+        userId: '84438967-f68f-4fa0-b620-0f08217e76af',
+      }),
     ).rejects.toThrow(BadRequestException);
   });
 
@@ -99,7 +110,11 @@ describe('TicketService', () => {
     ticketRepo.findOne.mockResolvedValue(null);
 
     await expect(
-      service.create({ showtimeId: 1, seat: 51 }),
+      service.create({
+        showtimeId: 1,
+        seat: 51,
+        userId: '84438967-f68f-4fa0-b620-0f08217e76af',
+      }),
     ).rejects.toThrow(BadRequestException);
   });
 });

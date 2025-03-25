@@ -14,16 +14,16 @@ export class Showtime {
   theater: string;
 
   @Column('timestamp')
-  start_time: Date;
+  startTime: Date;
 
   @Column('timestamp')
-  end_time: Date;
+  endTime: Date;
 
   @Column('float')
   price: number;
-
   @OneToMany(() => Ticket, (ticket) => ticket.showtime)
-tickets: Ticket[];
+  tickets: Ticket[];
+  
 @Column({ default: 50 })
 maxSeats: number;
 }

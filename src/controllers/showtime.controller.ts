@@ -16,10 +16,13 @@ export class ShowtimeController {
   async createShowtime(@Body() dto: CreateShowtimeDto): Promise<Showtime> {
     return this.showtimeService.create(dto);
   }
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() dto: CreateShowtimeDto): Promise<Showtime> {
-    return this.showtimeService.update(Number(id), dto);
-  }
+  @Post('update/:id')
+async updateShowtime(
+  @Param('id') id: string,
+  @Body() dto: CreateShowtimeDto,
+): Promise<Showtime> {
+  return this.showtimeService.update(Number(id), dto);
+}
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<{ deleted: boolean }> {

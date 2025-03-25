@@ -8,10 +8,10 @@ export class CreateShowtimeDto {
   theater: string;
 
   @IsDateString()
-  start_time: string;
+  startTime: string;
 
   @IsDateString()
-  end_time: string;
+  endTime: string;
 
   @IsNumber()
   price: number;

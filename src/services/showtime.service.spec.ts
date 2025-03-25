@@ -51,8 +51,8 @@ describe('ShowtimeService', () => {
     const dto = {
       movieId: 1,
       theater: 'אולם 1',
-      start_time: '2025-03-25T18:00:00Z',
-      end_time: '2025-03-25T20:00:00Z',
+      startTime: '2025-03-25T18:00:00Z',
+      endTime: '2025-03-25T20:00:00Z',
       price: 35,
     };
 
@@ -75,8 +75,8 @@ describe('ShowtimeService', () => {
       service.create({
         movieId: 99,
         theater: 'אולם 1',
-        start_time: '2025-03-25T18:00:00Z',
-        end_time: '2025-03-25T20:00:00Z',
+        startTime: '2025-03-25T18:00:00Z',
+        endTime: '2025-03-25T20:00:00Z',
         price: 35,
       }),
     ).rejects.toThrow(NotFoundException);
@@ -86,8 +86,8 @@ describe('ShowtimeService', () => {
     const dto = {
       movieId: 1,
       theater: 'אולם 1',
-      start_time: '2025-03-25T18:00:00Z',
-      end_time: '2025-03-25T20:00:00Z',
+      startTime: '2025-03-25T18:00:00Z',
+      endTime: '2025-03-25T20:00:00Z',
       price: 35,
     };
 

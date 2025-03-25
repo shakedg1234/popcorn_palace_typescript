@@ -25,8 +25,8 @@ export class ShowtimeService {
     const overlapping = await this.showtimeRepository
       .createQueryBuilder('showtime')
       .where('showtime.theater = :theater', { theater: createDto.theater })
-      .andWhere('showtime.start_time < :end_time', { end_time: createDto.end_time })
-      .andWhere('showtime.end_time > :start_time', { start_time: createDto.start_time })
+      .andWhere('showtime.startTime < :endTime', { endTime: createDto.endTime })
+      .andWhere('showtime.endTime > :startTime', { startTime: createDto.startTime })
       .getOne();
   
     if (overlapping) {
@@ -36,8 +36,8 @@ export class ShowtimeService {
     const showtime = this.showtimeRepository.create({
       movie,
       theater: createDto.theater,
-      start_time: new Date(createDto.start_time),
-      end_time: new Date(createDto.end_time),
+      startTime: new Date(createDto.startTime),
+      endTime: new Date(createDto.endTime),
       price: createDto.price,
     });
   
@@ -46,7 +46,7 @@ export class ShowtimeService {
   
   async getAllShowtimes() : Promise<Showtime[]>{
     return this.showtimeRepository.find({
-        relations: ['movie'], 
+
       });  
     }
     async update(id: number, dto: CreateShowtimeDto): Promise<Showtime> {
@@ -59,8 +59,8 @@ export class ShowtimeService {
         const overlapping = await this.showtimeRepository
           .createQueryBuilder('s')
           .where('s.theater = :theater', { theater: dto.theater })
-          .andWhere('s.start_time < :end_time', { end_time: dto.end_time })
-          .andWhere('s.end_time > :start_time', { start_time: dto.start_time })
+          .andWhere('s.startTime< :endTime', { endTime: dto.endTime })
+          .andWhere('s.endTime > :startTime', { startTime: dto.startTime })
           .andWhere('s.id != :id', { id }) // לא לבדוק מול ההקרנה שאנחנו מעדכנים
           .getOne();
       
@@ -71,8 +71,8 @@ export class ShowtimeService {
         Object.assign(showtime, {
           movie,
           theater: dto.theater,
-          start_time: new Date(dto.start_time),
-          end_time: new Date(dto.end_time),
+          startTime: new Date(dto.startTime),
+          endTime: new Date(dto.endTime),
           price: dto.price,
         });
       
